@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Create specific namespace for the challenge
+echo "Creating namespace..."
+kubectl create namespace applications
 # Assign worker role to node01
 echo "Assigning worker role to node01..."
 kubectl label node node01 node-role.kubernetes.io/worker=worker
