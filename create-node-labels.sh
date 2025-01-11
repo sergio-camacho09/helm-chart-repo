@@ -13,6 +13,7 @@ nodes=($(kubectl get nodes | awk '{if (NR!=1) {print $1}}'))
 for node in "${nodes[@]}"; do
   echo "Assigning custom label to node $node..."
   kubectl label node $node kubernetes.io/test=node$number
+  kubectl label node $node topology.kubernetes.io/name=zone$number
   echo "Label assigned"
   number=$((number + 1))
 done
