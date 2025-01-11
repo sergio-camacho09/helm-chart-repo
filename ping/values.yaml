@@ -27,7 +27,7 @@ nodeSelector:
   kubernetes.io/test: node2
 
 dependentService:
-  url: "kubernetes.default.svc.cluster.local:443"
+  url: "nginx-random-service.applications.svc.cluster.local:80"
 
 podAnnotations: {}
 
