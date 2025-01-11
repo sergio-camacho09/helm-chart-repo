@@ -76,3 +76,33 @@ affinity:
           - {{ include "ping.name" . }}
       topologyKey: kubernetes.io/hostname
 {{- end }}
+
+{{/*
+Deploy pods across different availability zone
+*/}}
+{{- define "ping.podZoneDistribution" -}}
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: topology.kubernetes.io/zone
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: {{ include "ping.name" . }}
+{{- end }}
+
+{{/*
+Wait until another service is up
+*/}}
+{{- define "ping.waitUntilServiceUp" -}}
+initContainers:
+  - name: wait-for-service
+    image: curlimages/curl:7.85.0
+    args:
+      - "-f"
+      - "http://{{ .Values.dependentService.url }}/health"
+    resources:
+      requests:
+        cpu: 10m
+        memory: 10Mi
+    restartPolicy: "Never"
+{{- end }}

@@ -26,6 +26,9 @@ serviceAccount:
 nodeSelector:
   kubernetes.io/test: node2
 
+dependentService:
+  url: "random-service.default.svc.cluster.local:8080"
+
 podAnnotations: {}
 
 podSecurityContext:
