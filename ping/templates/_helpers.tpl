@@ -93,7 +93,6 @@ topologySpreadConstraints:
 {{/*
 Wait until another service is up
 */}}
-{{/*
 {{- define "ping.waitUntilServiceUp" -}}
 initContainers:
   - name: wait-for-service
@@ -106,4 +105,3 @@ initContainers:
         cpu: 10m
         memory: 10Mi
 {{- end }}
-*/}}
