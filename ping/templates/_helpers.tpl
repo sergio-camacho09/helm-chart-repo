@@ -104,5 +104,5 @@ initContainers:
       requests:
         cpu: 10m
         memory: 10Mi
-    restartPolicy: "Never"
+    restartPolicy: Never
 {{- end }}
