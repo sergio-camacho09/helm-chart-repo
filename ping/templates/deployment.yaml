@@ -58,6 +58,8 @@ spec:
       {{/*
       {{- include "ping.podAffinity" . | nindent 6 }}
       */}}
+      {{- include "ping.podAffinity" . | nindent 6 }}
       {{/*
       {{- include "ping.podZoneDistribution" . | nindent 6 }}
       */}}
+      {{- include "ping.podZoneDistribution" . | nindent 6 }}
