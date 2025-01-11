@@ -99,7 +99,7 @@ initContainers:
     image: curlimages/curl:7.85.0
     args:
       - "-f"
-      - "http://{{ .Values.dependentService.url }}/health"
+      - "http://{{ .Values.dependentService.url }}"
     resources:
       requests:
         cpu: 10m
