@@ -1,7 +1,7 @@
 #!/bin/bash
 # Preparing environment
 echo "Preparing environment..."
-./create-node-labels.sh
+./scripts/create-node-labels.sh
 echo "Environment ready to use!"
 
 # Let's install a random service (nginx) that will be used by ping's init container
