@@ -1,0 +1,43 @@
+name: Deploy Helm Chart to GKE using Ansible
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Ansible setup
+      - name: Set up Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+          ansible --version
+
+      # Step 3: Install Helm and gcloud SDK
+      - name: Install Helm and gcloud
+        run: |
+          sudo snap install helm --classic
+          sudo apt-get install -y apt-transport-https ca-certificates gnupg
+          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          sudo apt-get update
+          sudo apt-get install -y google-cloud-sdk
+          gcloud version
+
+      # Step 4: Execute Ansible Playbook
+      - name: Execute Ansible Playbook
+        run: |
+          ansible-playbook -i localhost, sync_helm_charts.yaml
+        env:
+          GCP_SA_KEY_FILE: ${{ secrets.GCP_SA_KEY_FILE }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          REFERENCE_REGISTRY: ${{ secrets.REFERENCE_REGISTRY }}
+          INSTANCE_REGISTRY: ${{ secrets.INSTANCE_REGISTRY }}
