@@ -1,0 +1,38 @@
+- name: Sync Helm charts between registries
+  # We will execute the playbook in our personal computer
+  hosts: localhosts
+  # Dynamic variables to use in the playbook
+  vars_files:
+    - vars.yaml
+  # The list of task to execute
+  tasks:
+    - name: Ensure GCP SDK is installed
+      shell: |
+        if ! command -v gcloud &>/dev/null; then
+          echo "GCP SKD is not installed. Please install it." && exit 1
+        fi
+    # We can ommit this task because the challenge says that we can assume the caller is already authenticated
+    - name: Authenticate with GCP
+      shell: |
+        gcloud auth active-service-account --key-file="{{ gcp_credentials_file }}
+        gcloud config set project "{{ gcp_project }}"
+      environment:
+        # Env variable for GCP credentials
+        GOOGLE_APPLICATION_CREDENTIALS: "{{ gcp_credentials_file }}"
+      register: gcp_auth
+    - name: Pull Helm charts from reference registry
+      shell: |
+        helm repo add reference https://{{ reference_registry }}/helm-charts
+        helm repo update
+        helm pull reference/{{ item }} --untar --untardir /tmp/helm_charts/
+      # Replace with specific charts
+      loop: "{{ helm_charts }}"
+      register: pull_results
+    - name: Push Helm charts to instance registry
+      shell: |
+        helm package /tmp/helm_charts/{{ item }}
+        helm push /tmp/helm_charts/{{ item }} {{ instance_registry }}/helm-charts
+      # Iterate over the helm charts pulled in the previous task
+      loop: "{{ pull_results.results | map(attribute='item') | list }}"
+      environment:
+        GOOGLE_APPLICATION_CREDENTIALS: "{{ gcp_credentials_file }}"

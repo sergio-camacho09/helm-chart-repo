@@ -1,0 +1,7 @@
+gcp_project: "gcp-example-project"
+reference_registry: "reference.gcr.io"
+instance_registry: "instance.gcr.io"
+gcp_credentials_file: "/gcp/credentials/service-account-key.json"
+helm_charts:
+  - chart1
+  - chart2
