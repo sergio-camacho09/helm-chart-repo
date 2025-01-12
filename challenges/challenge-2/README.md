@@ -98,8 +98,8 @@ This task uploads the downloaded Helm charts to the instance registry:
 2. Populate the `variables.yml` file with the required values:
 
 ```yaml
-gcp_credentials_file: "/path/to/credentials.json"
-gcp_project: "my-gcp-project"
+gcp_credentials_file: "/gcp/credentials/service-account-key.json"
+gcp_project: "gcp-example-project"
 reference_registry: "reference.gcr.io"
 instance_registry: "instance.gcr.io"
 helm_charts:
