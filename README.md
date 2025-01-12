@@ -9,6 +9,7 @@ The repository has two main directories:
 - Scripts
 
 The Challenges directory contains files to resolve all the proposed challenges. On the other hand, the scripts directory contains some shell scripts to run and facilitate proofreading.
+Each and every one of the challeges directories have a README file to explain the steps to follow to resolve the challenge.
 ### Challenge 1
 
 In order to resolve this challenge, we will use [killercoda](https://killercoda.com/playgrounds/course/kubernetes-playgrounds/two-node) website as kubernetes lab. The selected one will be the playgroud with two nodes (2GB+2GB).
